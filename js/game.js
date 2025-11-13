@@ -74,7 +74,6 @@ function gameOver(message) {
   }
 }
 
-
 /* ===== JOGO ===== */
 const checkEndGame = () => {
   const disabledCards = document.querySelectorAll('.disabled-card');
@@ -89,8 +88,6 @@ const checkEndGame = () => {
   }
 };
 
-
-
 const endByTimeout = () => {
   clearInterval(loop);
 
@@ -100,7 +97,6 @@ const endByTimeout = () => {
     window.location = '../index.html'; // VOLTA PARA LOGIN
   }
 };
-
 
 const checkCards = () => {
   const firstCharacter = firstCard.getAttribute('data-character');
@@ -133,15 +129,40 @@ const checkCards = () => {
   }
 };
 
-const revealCard = ({ target }) => {
-  if (target.parentNode.className.includes('reveal-card')) return;
+/* Robust revealCard that works with click, touch and pointer events */
+const revealCard = (event) => {
+  // determine the card element reliably
+  // event.currentTarget will be present when handler attached to card;
+  // if handler receives a face element event, try closest('.card')
+  let cardEl = null;
+
+  if (event.currentTarget && event.currentTarget.classList && event.currentTarget.classList.contains('card')) {
+    cardEl = event.currentTarget;
+  } else {
+    // fallback
+    cardEl = event.target && event.target.closest ? event.target.closest('.card') : null;
+  }
+
+  if (!cardEl) return;
+
+  // Prevent default behavior on touch to avoid ghost clicks / scrolling
+  if (event.type === 'touchend' || event.type === 'touchstart') {
+    event.preventDefault && event.preventDefault();
+  }
+
+  // if card already revealed, ignore
+  if (cardEl.classList.contains('reveal-card')) return;
+
+  // guard: if both cards are occupied, ignore clicks until they reset
+  if (firstCard !== '' && secondCard !== '') return;
+
+  // reveal logic
+  cardEl.classList.add('reveal-card');
 
   if (firstCard === '') {
-    target.parentNode.classList.add('reveal-card');
-    firstCard = target.parentNode;
+    firstCard = cardEl;
   } else if (secondCard === '') {
-    target.parentNode.classList.add('reveal-card');
-    secondCard = target.parentNode;
+    secondCard = cardEl;
     checkCards();
   }
 };
@@ -155,7 +176,15 @@ const createCard = (character) => {
 
   card.appendChild(front);
   card.appendChild(back);
+
+  // add multiple listeners to ensure mobile compatibility
+  // pointer events cover mouse + touch on modern browsers
+  card.addEventListener('pointerup', revealCard);
+  // legacy touch for older browsers, passive:false to allow preventDefault
+  card.addEventListener('touchend', revealCard, { passive: false });
+  // click as a fallback
   card.addEventListener('click', revealCard);
+
   card.setAttribute('data-character', character);
   return card;
 };
