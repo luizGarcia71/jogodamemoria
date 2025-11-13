@@ -3,20 +3,20 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
-  overflow: hidden; /* evita scroll */
+  min-height: 100vh; /* CORREÇÃO CRÍTICA */
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
 }
 
-/* ===== CONTAINER GERAL ===== */
+/* ===== CONTAINER ===== */
 body {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   background: linear-gradient(135deg, #a4d7d1 0%, #f4f9f8 100%);
-  font-family: "Poppins", sans-serif;
-  box-sizing: border-box;
-  overflow: hidden;
 }
 
 /* ===== HEADER ===== */
@@ -32,6 +32,8 @@ header {
   border-radius: 10px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   font-size: 1rem;
+  position: relative;
+  z-index: 10;
 }
 
 .header-left,
@@ -46,11 +48,11 @@ header {
   display: block;
   font-size: 0.55rem;
   opacity: 0.7;
-  line-height: 1;
   text-transform: uppercase;
   letter-spacing: 0.06rem;
 }
 
+/* ===== INFORMAÇÕES ===== */
 .player-wrap,
 .timer-wrap,
 .lives-wrap {
@@ -63,7 +65,6 @@ header {
   font-size: 0.9rem;
   font-weight: 700;
   color: #004a57;
-  text-align: center;
 }
 
 .timer {
@@ -77,7 +78,6 @@ header {
   display: grid;
   place-items: center;
   width: 90vw;
-  height: calc(100vh - 120px);
   max-width: 600px;
   margin-top: 10px;
   justify-items: center;
@@ -85,6 +85,9 @@ header {
   grid-template-columns: repeat(5, 1fr);
   gap: 10px;
   box-sizing: border-box;
+  position: relative;
+  z-index: 20;
+  pointer-events: auto;
 }
 
 /* ===== CARTAS ===== */
@@ -96,6 +99,8 @@ header {
   transform-style: preserve-3d;
   transition: all 400ms ease;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .face {
@@ -126,7 +131,59 @@ header {
   pointer-events: none;
 }
 
-/* ===== AJUSTE DE GRID POR TAMANHO ===== */
+/* ===== VIDAS ===== */
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lives {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 60px;
+}
+
+.heart {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heart svg {
+  width: 100%;
+  height: 100%;
+  fill: #e02020;
+  stroke: #e02020;
+}
+
+.heart.empty svg {
+  fill: none;
+  opacity: 0.4;
+}
+
+.heart.lost {
+  transform: scale(0.85);
+  opacity: 0.5;
+  transition: all 0.2s ease;
+}
+
+/* ===== MODO ===== */
+.mode {
+  display: inline-block;
+  max-width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+  color: #004a57;
+}
+
+/* ===== RESPONSIVIDADE ===== */
 @media screen and (max-width: 900px) {
   .grid {
     grid-template-columns: repeat(5, 1fr);
@@ -141,6 +198,7 @@ header {
 }
 
 @media screen and (max-width: 600px) {
+
   header {
     width: 95%;
     padding: 8px 10px;
@@ -153,123 +211,47 @@ header {
   .grid {
     grid-template-columns: repeat(4, 1fr);
     gap: 6px;
-    width: 95vw;
-    height: calc(100vh - 110px);
-  }
-
-  .card {
-    border-radius: 6px;
-  }
-}
-
-@media screen and (max-width: 420px) {
-  header {
-    padding: 6px 8px;
-  }
-
-  .label { font-size: 0.45rem; }
-  .player { font-size: 0.75rem; }
-  .timer { font-size: 0.8rem; }
-
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
-    width: 96vw;
-    height: calc(100vh - 100px);
-  }
-
-  .card {
-    border-radius: 5px;
-  }
-}
-
-@media screen and (max-width: 350px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
-  }
-
-  .card {
-    border-radius: 4px;
-  }
-}
-/* ===== CARTAS MENORES E AJUSTADAS AO MOBILE ===== */
-@media screen and (max-width: 600px) {
-  html, body {
-    overflow: hidden;
-  }
-
-  header {
-    width: 95%;
-    padding: 8px 10px;
-    gap: 8px;
-  }
-
-  .label {
-    font-size: 0.48rem;
-  }
-
-  .player {
-    font-size: 0.78rem;
-  }
-
-  .timer {
-    font-size: 0.85rem;
-  }
-
-  /* grid compacto */
-  .grid {
-    grid-template-columns: repeat(4, 1fr);
-    justify-content: center;
-    align-content: center;
-    gap: 6px;
     width: 100%;
     max-width: 360px;
     margin: 0 auto;
-    height: calc(100vh - 110px);
-    overflow: hidden;
   }
 
-  /* cartas realmente menores */
   .card {
     width: 70px;
     height: 90px;
     border-radius: 6px;
     transform: none;
   }
-
-  .face {
-    border-radius: 6px;
-  }
 }
 
-/* telas pequenas (ex: celulares compactos) */
 @media screen and (max-width: 420px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
+    gap: 5px;
     max-width: 320px;
   }
 
   .card {
     width: 65px;
     height: 80px;
-    border-radius: 5px;
+  }
+
+  .mode {
+    max-width: 60px;
+    font-size: 0.7rem;
   }
 }
 
-/* telas muito pequenas (~360px) */
 @media screen and (max-width: 380px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 3px;
+    gap: 4px;
     max-width: 300px;
   }
 
   .card {
     width: 60px;
     height: 75px;
-    border-radius: 4px;
   }
 
   header {
@@ -279,217 +261,4 @@ header {
   .label { font-size: 0.42rem; }
   .player { font-size: 0.7rem; }
   .timer { font-size: 0.78rem; }
-}
-/* ===== CARTAS MAIORES, MAS AINDA AJUSTADAS AO MOBILE ===== */
-@media screen and (max-width: 600px) {
-  html, body {
-    overflow: hidden;
-  }
-
-  header {
-    width: 95%;
-    padding: 8px 10px;
-    gap: 8px;
-  }
-
-  .label {
-    font-size: 0.5rem;
-  }
-
-  .player {
-    font-size: 0.82rem;
-  }
-
-  .timer {
-    font-size: 0.9rem;
-  }
-
-  /* grid compacto */
-  .grid {
-    grid-template-columns: repeat(4, 1fr);
-    justify-content: center;
-    align-content: center;
-    gap: 8px;
-    width: 100%;
-    max-width: 380px;
-    margin: 0 auto;
-    height: calc(100vh - 115px);
-    overflow: hidden;
-  }
-
-  /* cartas um pouco maiores */
-  .card {
-    width: 80px;
-    height: 100px;
-    border-radius: 7px;
-    transform: none;
-  }
-
-  .face {
-    border-radius: 7px;
-  }
-}
-
-/* telas pequenas (ex: celulares compactos) */
-@media screen and (max-width: 420px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
-    max-width: 340px;
-  }
-
-  .card {
-    width: 75px;
-    height: 90px;
-    border-radius: 6px;
-  }
-}
-
-/* telas muito pequenas (~360px) */
-@media screen and (max-width: 380px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
-    max-width: 310px;
-  }
-
-  .card {
-    width: 70px;
-    height: 85px;
-    border-radius: 5px;
-  }
-
-  header {
-    padding: 6px 8px;
-  }
-
-  .label { font-size: 0.46rem; }
-  .player { font-size: 0.75rem; }
-  .timer { font-size: 0.82rem; }
-}
-/* ===== VIDAS AO LADO DO NOME ===== */
-.player-info {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.lives {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  min-width: 60px; /* mesmo espaço que o nome ocupa */
-}
-
-/* coração */
-.heart {
-  width: 18px;
-  height: 18px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.heart svg {
-  width: 100%;
-  height: 100%;
-  fill: #e02020;
-  stroke: #e02020;
-  transition: fill 0.2s ease;
-}
-
-/* coração vazio */
-.heart.empty svg {
-  fill: none;
-  opacity: 0.4;
-}
-
-/* animação ao perder */
-.heart.lost {
-  transform: scale(0.85);
-  opacity: 0.5;
-  transition: all 0.2s ease;
-}
-
-/* Responsivo */
-@media (max-width: 600px) {
-  .heart {
-    width: 16px;
-    height: 16px;
-  }
-}
-/* ===== RESPONSIVIDADE PARA O NOME DO MODO ===== */
-.mode {
-  display: inline-block;
-  max-width: 90px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  text-align: center;
-  font-weight: 700;
-  color: #004a57;
-}
-
-/* Ajustes para telas menores */
-@media screen and (max-width: 600px) {
-  .mode {
-    max-width: 70px;
-    font-size: 0.75rem;
-  }
-}
-
-@media screen and (max-width: 420px) {
-  .mode {
-    max-width: 60px;
-    font-size: 0.7rem;
-  }
-}
-/* ===== CORREÇÕES PARA TOQUE EM CELULAR ===== */
-
-/* garante que toques funcionem em todos os elementos */
-* {
-  touch-action: manipulation;
-}
-
-/* garante que nenhuma camada bloqueie o toque */
-.grid, .card, .face {
-  pointer-events: auto;
-}
-
-/* melhora resposta ao toque em Android/iOS */
-.card {
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-
-/* impede que o transform no mobile quebre o toque */
-@media (max-width: 600px) {
-  .card.reveal-card {
-    transform: rotateY(180deg) !important;
-  }
-}
-/* ----------- CORREÇÃO MOBILE: HEADER NÃO PODE COBRIR A TELA ----------- */
-header {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-  height: auto !important;
-  padding: 10px 0;
-}
-
-/* Garante que o GRID esteja sempre acima de qualquer overlay invisível */
-.grid {
-  position: relative;
-  z-index: 20;
-  pointer-events: auto;
-}
-
-/* Remove elementos invisíveis bloqueando cliques */
-body > * {
-  pointer-events: auto;
-}
-* {
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
 }
