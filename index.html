@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/login.css">
+
+  <script defer src="./js/login.js"></script>
+  <link rel="shortcut icon" href="./images/brain.png" type="image/x-icon">
+  <title>Memory Game | Login</title>
+</head>
+
+<body>
+
+  <form class="login-form">
+
+    <div class="login__header">
+      <img src="./images/logo.png" alt="logo">
+      <img src="./images/cerebro.jpg" alt="brain icon">
+      <h1>Memory Game</h1>
+    </div>
+
+    <input type="text" placeholder="Name" class="login__input" required>
+
+    <div class="mode-select">
+      <h2>Escolha o modo de jogo:</h2>
+
+      <label>
+        <input type="radio" name="gameMode" value="normal" checked>
+        🟢 Modo Normal
+      </label>
+
+      <label>
+        <input type="radio" name="gameMode" value="timeattack">
+        ⏰ Contra o Tempo (60s)
+      </label>
+
+      <label>
+        <input type="radio" name="gameMode" value="hard">
+        💀 Modo Difícil (Errou = Fim)
+      </label>
+
+      <label>
+        <input type="radio" name="gameMode" value="frenetic">
+        ⚡ Modo Frenético (30s + bônus por acerto)
+      </label>
+    </div>
+
+    <button type="submit" class="login__button" disabled>Play</button>
+
+  </form>
+
+  <script>
+    const form = document.querySelector('.login-form');
+    const input = document.querySelector('.login__input');
+    const button = document.querySelector('.login__button');
+
+    // Habilita o botão apenas se o nome tiver 3+ caracteres
+    input.addEventListener('input', ({ target }) => {
+      if (target.value.trim().length > 3) {
+        button.removeAttribute('disabled');
+      } else {
+        button.setAttribute('disabled', '');
+      }
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const playerName = input.value.trim();
+      const selectedMode = document.querySelector('input[name="gameMode"]:checked').value;
+
+      if (playerName === '') {
+        alert('Por favor, insira seu nome antes de jogar.');
+        return;
+      }
+
+      localStorage.setItem('player', playerName);
+      localStorage.setItem('gameMode', selectedMode);
+
+      window.location = 'pages/game.html';
+    });
+  </script>
+
+</body>
+
+</html>

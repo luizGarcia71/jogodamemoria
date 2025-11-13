@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Memory Game</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/game.css" />
+
+  <!-- Script -->
+  <script defer src="../js/game.js"></script>
+  <link rel="shortcut icon" href="../images/brain.png" type="image/x-icon">
+</head>
+
+<body>
+
+  <!-- 🔹 CABEÇALHO DO JOGO -->
+  <header>
+    <div class="header-left">
+      <div class="player-wrap">
+        <span class="label">Jogador</span>
+        <div class="player-info">
+          <span class="player">---</span>
+          <div class="lives"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="timer-wrap">
+        <span class="label">Tempo</span>
+        <span class="timer">0</span>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <div class="mode-wrap">
+        <span class="label">Modo</span>
+        <span class="mode">---</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 🔹 GRADE DE CARTAS -->
+  <div class="grid"></div>
+
+</body>
+</html>
