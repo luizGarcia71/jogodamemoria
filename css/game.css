@@ -261,3 +261,34 @@ header {
   .player { font-size: 0.7rem; }
   .timer { font-size: 0.78rem; }
 }
+/* ===== FIX — Toque no mobile ===== */
+
+/* Garante que nada bloqueie o clique sobre a grid */
+.grid,
+.card,
+.face {
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Remove qualquer overlay involuntário */
+* {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+/* FAZ A GRID REALMENTE FICAR NO TOPO */
+.grid {
+  position: relative;
+  z-index: 9999 !important;
+}
+
+/* Evita que elementos do header criem camada de toque */
+header {
+  pointer-events: none;
+}
+
+header * {
+  pointer-events: auto; /* exceto os botões internos */
+}
