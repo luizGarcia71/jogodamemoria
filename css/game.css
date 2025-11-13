@@ -445,3 +445,27 @@ header {
     font-size: 0.7rem;
   }
 }
+/* ===== CORREÇÕES PARA TOQUE EM CELULAR ===== */
+
+/* garante que toques funcionem em todos os elementos */
+* {
+  touch-action: manipulation;
+}
+
+/* garante que nenhuma camada bloqueie o toque */
+.grid, .card, .face {
+  pointer-events: auto;
+}
+
+/* melhora resposta ao toque em Android/iOS */
+.card {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* impede que o transform no mobile quebre o toque */
+@media (max-width: 600px) {
+  .card.reveal-card {
+    transform: rotateY(180deg) !important;
+  }
+}
