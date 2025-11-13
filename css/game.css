@@ -469,3 +469,27 @@ header {
     transform: rotateY(180deg) !important;
   }
 }
+/* ----------- CORREÇÃO MOBILE: HEADER NÃO PODE COBRIR A TELA ----------- */
+header {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: auto !important;
+  padding: 10px 0;
+}
+
+/* Garante que o GRID esteja sempre acima de qualquer overlay invisível */
+.grid {
+  position: relative;
+  z-index: 20;
+  pointer-events: auto;
+}
+
+/* Remove elementos invisíveis bloqueando cliques */
+body > * {
+  pointer-events: auto;
+}
+* {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
