@@ -71,8 +71,11 @@ HTML5 — estrutura da interface
 
 CSS3 — layout, responsividade e animações
 
+
 JavaScript (ES6+) — lógica do jogo, timer e manipulação do DOM
 
 LocalStorage — persistência do nome do jogador
 
 CSS Grid & Media Queries — responsividade
+
+Link para acessar o jogo:https://luizgarcia71.github.io/jogodamemoria/
