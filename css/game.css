@@ -292,3 +292,111 @@ header {
 header * {
   pointer-events: auto; /* exceto os botões internos */
 }
+/* ===== BASE ===== */
+body {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* ===== CONTAINER ===== */
+.game-container {
+  width: 100%;
+  max-width: 500px;
+  padding: 16px;
+}
+
+/* ===== HEADER ===== */
+.game-header {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.header-box {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.header-box.highlight {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  font-weight: bold;
+}
+
+.label {
+  display: block;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.player,
+.timer,
+.mode {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* ===== VIDAS ===== */
+.lives {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 5px;
+}
+
+.heart svg {
+  width: 16px;
+  height: 16px;
+  fill: red;
+}
+
+.heart.empty svg {
+  fill: #444;
+}
+
+/* ===== GRID ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+/* ===== CARTAS ===== */
+
+
+/* ===== EFEITOS ===== */
+.card:hover {
+  transform: scale(1.05);
+}
+
+.disabled-card {
+  opacity: 0.5;
+  filter: grayscale(100%);
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 400px) {
+  .grid {
+    gap: 6px;
+  }
+
+  .header-box {
+    padding: 81px;
+  }
+
+  .player,
+  .timer,
+  .mode {
+    font-size: 14px;
+  }
+}
